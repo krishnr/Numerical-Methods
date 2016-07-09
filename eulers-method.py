@@ -17,20 +17,20 @@ import math
 # Set these vars with the given information in the problem
 # ========================================================
 
-a = 0
-b = 4
-alpha = 1
+a = 1
+b = 6
+alpha = 2
 
 def f(x,t):
-    return t-x
+    return 2 - x/t
 
 # set only 1 of these
-h = None
-N = 4
+h = 0.5
+N = None
 
 exact_soln_exists = True
 def exact_soln(t):
-    return 2*math.exp(-t) + t - 1
+    return t + 1/t
 
 # ========================================================
 
@@ -40,25 +40,26 @@ if h:
 else:
     h = (b-a)/N
 
-w = [None] * (N+1)
+w, w_prev = None, None
 
 for i in xrange(0,N+1):
 
     t = a + i*h
 
     if i == 0:
-        w[0] = alpha
+        w = alpha
     else:
-        w[i] = w[i-1] + h*f(w[i-1],t-h)
+        w_prev = w
+        w = w_prev + h*f(w_prev,t-h)
 
     spaces = 10*' '
     if exact_soln_exists:
         x_t = exact_soln(t)
-        error = x_t - w[i]
+        error = abs(x_t - w)
         print 't_{0} = {1} {2} w_{0} = {3} {2} x({0}) = {4} {2} x({0}) - w_{0} = {5}'.format(
-            str(i), '{:5.2f}'.format(t), spaces, '{:10.6f}'.format(w[i]), '{:10.6f}'.format(x_t), '{:10.6f}'.format(error)
+            str(i), '{:5.2f}'.format(t), spaces, '{:10.6f}'.format(w), '{:10.6f}'.format(x_t), '{:10.6f}'.format(error)
         )
     else:
         print 't_{0} = {1} {2} w_{0} = {3}'.format(
-            str(i), '{:5.2f}'.format(t), spaces, '{:10.6f}'.format(w[i])
+            str(i), '{:5.2f}'.format(t), spaces, '{:10.6f}'.format(w)
         )
