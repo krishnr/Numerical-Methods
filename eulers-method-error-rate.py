@@ -23,13 +23,13 @@ import math
 
 a = 1
 b = 6
-alpha = 2
+alpha = 1
 
 def f(x,t):
     return 2 - x/t
 
 def exact_soln(t):
-    return t+ 1/t
+    return t
 
 # ========================================================
 
@@ -54,6 +54,12 @@ for j in xrange(1,iterations+1):
 
     abs_error[j] = abs(exact_soln(t) - w)
 
+    if (abs_error[j] == 0):
+        print 'The approximate solution and the exact solution are equal.'
+        print 'Solution = {0}'.format(w)
+        break
+
+    # 'or 0' handles the case where j = 0 (the error ratio is meaningless in this case)
     error_rate = (abs_error[j-1] or 0)/abs_error[j]
 
     spaces = 5*' '
