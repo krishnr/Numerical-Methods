@@ -6,8 +6,8 @@ import math
 # =============================
 #
 # The IVP should look like:
-# y'(t) = f(t,y) where t belongs to [a,b]
-# y(a) = alpha
+# x'(t) = f(t,x) where t belongs to [a,b]
+# x(a) = alpha
 #
 # You should also be given either h (the step-size) or N (the number of sub-intervals)
 #
@@ -18,11 +18,11 @@ import math
 # ========================================================
 
 a = 0
-b = 2
+b = 4
 alpha = 1
 
-def f(y,t):
-    return math.exp(t)/y
+def f(x,t):
+    return t-x
 
 # set only 1 of these
 h = None
@@ -30,7 +30,7 @@ N = 4
 
 exact_soln_exists = True
 def exact_soln(t):
-    return math.sqrt(2 * math.exp(t) - 1)
+    return 2*math.exp(-t) + t - 1
 
 # ========================================================
 
@@ -55,7 +55,7 @@ for i in xrange(0,N+1):
     if exact_soln_exists:
         x_t = exact_soln(t)
         error = x_t - w[i]
-        print 't_{0} = {1} {2} w_{0} = {3} {2} y({0}) = {4} {2} y({0}) - w_{0} = {5}'.format(
+        print 't_{0} = {1} {2} w_{0} = {3} {2} x({0}) = {4} {2} x({0}) - w_{0} = {5}'.format(
             str(i), '{:5.2f}'.format(t), spaces, '{:10.6f}'.format(w[i]), '{:10.6f}'.format(x_t), '{:10.6f}'.format(error)
         )
     else:
