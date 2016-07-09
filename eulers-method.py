@@ -16,6 +16,7 @@ import math
 
 # Set these vars with the given information in the problem
 # ========================================================
+
 a = 0
 b = 2
 alpha = 1
@@ -29,8 +30,8 @@ N = 4
 
 exact_soln_exists = True
 def exact_soln(t):
-    return math.sqrt(2*math.exp(t)-1)
-    # return None
+    return math.sqrt(2 * math.exp(t) - 1)
+
 # ========================================================
 
 
@@ -50,12 +51,14 @@ for i in xrange(0,N+1):
     else:
         w[i] = w[i-1] + h*f(w[i-1],t-h)
 
-    space = ' '
+    spaces = 10*' '
     if exact_soln_exists:
-        print 't_' + str(i) + ' = ' + '{:5.2f}'.format(t) + 10*space \
-            + 'w_' + str(i) + ' = ' + '{:10.6f}'.format(w[i]) + 10*space \
-            + 'y(' + str(i) + ') = ' + '{:10.6f}'.format(exact_soln(t)) + 10*space \
-            + 'y(' + str(i) + ') - w(' + str(i) + ') = ' + '{:10.6f}'.format(exact_soln(t) - w[i])
+        x_t = exact_soln(t)
+        error = x_t - w[i]
+        print 't_{0} = {1} {2} w_{0} = {3} {2} y({0}) = {4} {2} y({0}) - w_{0} = {5}'.format(
+            str(i), '{:5.2f}'.format(t), spaces, '{:10.6f}'.format(w[i]), '{:10.6f}'.format(x_t), '{:10.6f}'.format(error)
+        )
     else:
-        print 't_' + str(i) + ' = ' + '{:5.2f}'.format(t) + 10*space \
-            + 'w_' + str(i) + ' = ' + '{:10.6f}'.format(w[i])
+        print 't_{0} = {1} {2} w_{0} = {3}'.format(
+            str(i), '{:5.2f}'.format(t), spaces, '{:10.6f}'.format(w[i])
+        )
