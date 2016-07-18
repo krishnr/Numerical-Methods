@@ -2,7 +2,7 @@
 from __future__ import division
 import math
 
-# Euler's Method of solving DEs
+# Heun's Method of solving DEs
 # =============================
 #
 # The IVP should look like:
@@ -12,6 +12,8 @@ import math
 # You should also be given either h (the step-size) or N (the number of sub-intervals)
 #
 # The solution is approximated by w
+#
+# Heun's Method is a special case of RK2 where a1=a2=1/2 and beta = gamma = h
 
 
 # Set these vars with the given information in the problem
@@ -34,11 +36,13 @@ def exact_soln(t):
 
 # ========================================================
 
-
 if h:
     N = int((b-a)/h)
 else:
     h = (b-a)/N
+
+a1, a2 = 1/2, 1/2
+beta, gamma = h, h
 
 w, w_prev = None, None
 
@@ -50,7 +54,8 @@ for i in xrange(0,N+1):
         w = alpha
     else:
         w_prev = w
-        w = w_prev + h*f(w_prev,t-h)
+        temp_w = w_prev + h*f(w_prev, t-h)
+        w = w_prev + h/2 * (f(w_prev, t-h) + f(temp_w, t))
 
     spaces = 10*' '
     if exact_soln_exists:

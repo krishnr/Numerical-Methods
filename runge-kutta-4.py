@@ -2,7 +2,7 @@
 from __future__ import division
 import math
 
-# Euler's Method of solving DEs
+# Fourth Order Runge-Kutta Method of solving DEs
 # =============================
 #
 # The IVP should look like:
@@ -25,7 +25,7 @@ def f(x,t):
     return 1 + x/t
 
 # set only 1 of these
-h = 0.5
+h = 1
 N = None
 
 exact_soln_exists = False
@@ -33,7 +33,6 @@ def exact_soln(t):
     return t + 1/t
 
 # ========================================================
-
 
 if h:
     N = int((b-a)/h)
@@ -50,7 +49,11 @@ for i in xrange(0,N+1):
         w = alpha
     else:
         w_prev = w
-        w = w_prev + h*f(w_prev,t-h)
+        k1 = h*f(w_prev,t-h)
+        k2 = h*f(w_prev + k1/2,t-h + h/2)
+        k3 = h*f(w_prev + k2/2,t-h + h/2)
+        k4 = h*f(w_prev + k3,t-h + h)
+        w = w_prev + 1/6 * (k1 + 2*k2 + 2*k3 + k4)
 
     spaces = 10*' '
     if exact_soln_exists:
