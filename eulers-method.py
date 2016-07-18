@@ -17,20 +17,20 @@ import math
 # Set these vars with the given information in the problem
 # ========================================================
 
-a = 1
-b = 6
+a = 0
+b = 1
 alpha = 1
 
 def f(x,t):
-    return 1 + x/t
+    return t/x
 
 # set only 1 of these
-h = 0.5
+h = 1/4
 N = None
 
-exact_soln_exists = False
+exact_soln_exists = True
 def exact_soln(t):
-    return t + 1/t
+    return math.sqrt(t**2 + 1)
 
 # ========================================================
 
